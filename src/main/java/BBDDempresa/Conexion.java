@@ -32,7 +32,7 @@ public class Conexion{
             if (cn != null) {
                 if (!tableExists(cn, "DIETAS")) {
                     stm = cn.createStatement();
-                    stm.executeUpdate("CREATE TABLE Dietas (ID VARCHAR(12) NOT NULL, Empleado VARCHAR(45), Cantidad DOUBLE, Concepto VARCHAR(120), PRIMARY KEY (ID))");
+                    stm.executeUpdate("CREATE TABLE Dietas (ID VARCHAR(12) NOT NULL, Empleado VARCHAR(45), Departamento VARCHAR(45), Cantidad DOUBLE, Concepto VARCHAR(120), PRIMARY KEY (ID))");
                     System.out.println("Tabla 'Dietas' creada exitosamente.");
                 } else {
                     stm = cn.createStatement();
@@ -44,6 +44,7 @@ public class Conexion{
                 while (rs.next()) {
                     String id = rs.getString("ID");
                     String empleado = rs.getString("Empleado");
+                    String departamento = rs.getString("Departamento");
                     String cantidad = rs.getString("Cantidad");
                     String concepto = rs.getString("Concepto");
                 }
@@ -74,7 +75,7 @@ public class Conexion{
     try {
         cn = con.conectar();
         stm = cn.createStatement();
-        stm.executeUpdate("INSERT INTO Dietas (ID, Empleado, Cantidad, Concepto) VALUES ('" + dieta.getID() + "', '" + dieta.getEmpleado() + "', '" + dieta.getCantidad() + "', '" + dieta.getConcepto() + "')");
+        stm.executeUpdate("INSERT INTO Dietas (ID, Empleado, Cantidad, Concepto) VALUES ('" + dieta.getID() + "', '" + dieta.getEmpleado() + "', '" + dieta.getDepartamento() + "', '"+ dieta.getCantidad() + "', '" + dieta.getConcepto() + "')");
         result = "Dietas insertadas correctamente";
     }catch (SQLException e) {
         //e.printStackTrace();
@@ -82,5 +83,31 @@ public class Conexion{
     }
     return result;
     }
+
+public String mostarDietas() {
+
+    Conexion con = new Conexion();
+    Connection cn = null;
+    Statement stm = null;
+    ResultSet rs = null;
+    String result = null;
+
+    try {
+        cn = con.conectar();
+        stm = cn.createStatement();
+        rs = stm.executeQuery("SELECT * FROM Dietas WHERE Departamento = 'Informática' AND Cantidad > 30");
+        while (rs.next()) {
+            String id = rs.getString("ID");
+            String empleado = rs.getString("Empleado");
+            String departamento = rs.getString("Departamento");
+            String cantidad = rs.getString("Cantidad");
+            String concepto = rs.getString("Concepto");
+        }
+    } catch (SQLException e) {
+        //e.printStackTrace();
+        result = "\nError en la consulta\n";
+    }
+    return result;
+}
 
 }

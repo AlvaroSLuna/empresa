@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
+
     public void menu() {
         Scanner scanner = new Scanner(System.in);
         int opc = 0;
@@ -21,7 +22,7 @@ public class Menu {
                     anyadirDietas(scanner);
                     break;
                 case 2:
-                    System.out.println("Mostrar Dietas");
+                    mostrarDietas();
                     break;
                 case 3:
                     System.out.println("Incrementar Dietas");
@@ -38,6 +39,7 @@ public class Menu {
 
         String ID = "";
         String Empleado = "";
+        String Departamento = "";
         String Cantidad = "";
         String Concepto = "";
 
@@ -46,15 +48,24 @@ public class Menu {
             ID = scanner.nextLine();
             System.out.println("Introduce el Empleado");
             Empleado = scanner.nextLine();
+            System.out.println("Introduce el Departamento");
+            Departamento = scanner.nextLine();
             System.out.println("Introduce la Cantidad");
             Cantidad = scanner.nextLine();
             System.out.println("Introduce el Concepto");
             Concepto = scanner.nextLine();
-        } while (ID.equals("") || Empleado.equals("") || Cantidad.equals("") || Concepto.equals(""));
 
-        Dieta dieta = new Dieta(ID, Empleado, Cantidad, Concepto);
+        } while (ID.equals("") || Empleado.equals("") || Departamento.equals("") || Cantidad.equals("") || Concepto.equals(""));
+
+        Dieta dieta = new Dieta(ID, Empleado, Departamento, Cantidad, Concepto);
         Conexion con = new Conexion();
         String result = con.anyadirDietas(dieta);
+        System.out.println(result);
+    }
+
+    public void mostrarDietas() {
+        Conexion con = new Conexion();
+        String result = con.mostarDietas();
         System.out.println(result);
     }
 

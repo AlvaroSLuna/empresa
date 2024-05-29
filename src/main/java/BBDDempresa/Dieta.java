@@ -4,14 +4,24 @@ public class Dieta {
 
     private String ID;
     private String Empleado;
+    private String Departamento;
     private String Cantidad;
     private String Concepto;
 
-    public Dieta(String ID, String Empleado, String Cantidad, String Concepto) {
+    public Dieta(String ID, String Empleado, String Departamento, String Cantidad, String Concepto) {
         this.ID = ID;
         this.Empleado = Empleado;
+        this.Departamento = Departamento;
         this.Cantidad = Cantidad;
         this.Concepto = Concepto;
+    }
+
+    public String getDepartamento() {
+        return Departamento;
+    }
+
+    public void setDepartamento(String departamento) {
+        Departamento = departamento;
     }
 
     public String getID() {
