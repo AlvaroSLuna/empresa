@@ -2,7 +2,7 @@ package BBDDempresa;
 
 import java.sql.*;
 
-public class Conexion {
+public class Conexion{
     private static final String CONTROLADOR = "com.mysql.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost:3010/Empresa?allowPublicKeyRetrieval=true";
     private static final String USUARIO = "root";
@@ -63,8 +63,24 @@ public class Conexion {
         return exists;
     }
 
-public String anyadirDietas() {
-    return null;
+    public String anyadirDietas(Dieta dieta) {
+
+    Conexion con = new Conexion();
+    Connection cn = null;
+    Statement stm = null;
+    ResultSet rs = null;
+    String result = null;
+
+    try {
+        cn = con.conectar();
+        stm = cn.createStatement();
+        stm.executeUpdate("INSERT INTO Dietas (ID, Empleado, Cantidad, Concepto) VALUES ('" + dieta.getID() + "', '" + dieta.getEmpleado() + "', '" + dieta.getCantidad() + "', '" + dieta.getConcepto() + "')");
+        result = "Dietas insertadas correctamente";
+    }catch (SQLException e) {
+        //e.printStackTrace();
+        result = "\nError en la inserción\n";
+    }
+    return result;
     }
 
 }
