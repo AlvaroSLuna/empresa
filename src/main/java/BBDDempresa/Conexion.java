@@ -1,8 +1,6 @@
 package BBDDempresa;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Conexion {
     private static final String CONTROLADOR = "com.mysql.jdbc.Driver";
@@ -24,5 +22,43 @@ public class Conexion {
         }
         return conexion;
     }
+    public void startDB(){
+        Conexion con = new Conexion();
+        Connection cn = null;
+        Statement stm = null;
+        ResultSet rs = null;
+        try {
+            cn = con.conectar();
+            if (cn != null) {
+                if (!tableExists(cn, "DIETAS")) {
+                    stm = cn.createStatement();
+                    stm.executeUpdate("CREATE TABLE Usuarios (ID VARCHAR(12) NOT NULL, Empleado VARCHAR(45), Cantidad/euros DOUBLE(45), Concepto VARCHAR(120), PRIMARY KEY (ID))");
+                    System.out.println("Tabla 'Usuarios' creada exitosamente.");
+                } else {
+                    stm = cn.createStatement();
+                    System.out.println("La tabla 'Usuarios' ya existe.");
+                }
 
+                rs = stm.executeQuery("SELECT * FROM Usuarios");
+
+                while (rs.next()) {
+                    String dni = rs.getString("DNI");
+                    String nombre = rs.getString("nombre");
+                    String pais = rs.getString("pais");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private static boolean tableExists(Connection connection, String tableName) throws SQLException {
+        boolean exists = false;
+        DatabaseMetaData meta = connection.getMetaData();
+        try (ResultSet rs = meta.getTables(null, null, tableName, null)) {
+            if (rs.next()) {
+                exists = true;
+            }
+        }
+        return exists;
+    }
 }
