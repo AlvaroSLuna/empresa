@@ -35,6 +35,7 @@ public class Conexion{
                     stm.executeUpdate("CREATE TABLE Dietas (ID VARCHAR(12) NOT NULL, Empleado VARCHAR(45), Departamento VARCHAR(45), Cantidad DOUBLE, Concepto VARCHAR(120), PRIMARY KEY (ID))");
                     System.out.println("Tabla 'Dietas' creada exitosamente.");
                 } else {
+
                     stm = cn.createStatement();
                     System.out.println("La tabla 'Dietas' ya existe.");
                 }
@@ -50,7 +51,8 @@ public class Conexion{
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
+            System.out.println("La tabla 'Dietas' ya existe.");
         }
     }
     private static boolean tableExists(Connection connection, String tableName) throws SQLException {
@@ -110,4 +112,28 @@ public String mostarDietas() {
     return result;
 }
 
+public String incrementarDietas() {
+    Conexion con = new Conexion();
+    Connection cn = null;
+    Statement stm = null;
+    ResultSet rs = null;
+    String result = null;
+
+    try {
+        cn = con.conectar();
+        stm = cn.createStatement();
+        rs = stm.executeQuery("UPDATE Dietas SET Cantidad = Cantidad * 1.10 WHERE Departamento = 'Ventas'");
+        while (rs.next()) {
+            String id = rs.getString("ID");
+            String empleado = rs.getString("Empleado");
+            String departamento = rs.getString("Departamento");
+            String cantidad = rs.getString("Cantidad");
+            String concepto = rs.getString("Concepto");
+        }
+    } catch (SQLException e) {
+        //e.printStackTrace();
+        result = "\nError en la consulta\n";
+    }
+    return result;
+    }
 }

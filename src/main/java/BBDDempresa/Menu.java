@@ -25,7 +25,7 @@ public class Menu {
                     mostrarDietas();
                     break;
                 case 3:
-                    System.out.println("Incrementar Dietas");
+                    incrementarDietas();
                     break;
                 case 4:
                     System.out.println("Hasta pronto");
@@ -64,8 +64,20 @@ public class Menu {
     }
 
     public void mostrarDietas() {
+
+        System.out.println("Estas son las dietas en empleados de informatica mayores de 30€:");
+
         Conexion con = new Conexion();
         String result = con.mostarDietas();
+        System.out.println(result);
+    }
+
+    public void incrementarDietas() {
+
+        System.out.println("Las Dietas han sido incrementadas en 10% en el departamento de Ventas");
+
+        Conexion con = new Conexion();
+        String result = con.incrementarDietas();
         System.out.println(result);
     }
 
