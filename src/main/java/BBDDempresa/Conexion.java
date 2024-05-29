@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class Conexion {
     private static final String CONTROLADOR = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3010/proyecto?allowPublicKeyRetrieval=true";
+    private static final String URL = "jdbc:mysql://localhost:3010/Empresa?allowPublicKeyRetrieval=true";
     private static final String USUARIO = "root";
     private static final String CLAVE = "123456789";
 
@@ -22,7 +22,7 @@ public class Conexion {
         }
         return conexion;
     }
-    public void startDB(){
+   public void startDB(){
         Conexion con = new Conexion();
         Connection cn = null;
         Statement stm = null;
@@ -32,19 +32,20 @@ public class Conexion {
             if (cn != null) {
                 if (!tableExists(cn, "DIETAS")) {
                     stm = cn.createStatement();
-                    stm.executeUpdate("CREATE TABLE Usuarios (ID VARCHAR(12) NOT NULL, Empleado VARCHAR(45), Cantidad/euros DOUBLE(45), Concepto VARCHAR(120), PRIMARY KEY (ID))");
-                    System.out.println("Tabla 'Usuarios' creada exitosamente.");
+                    stm.executeUpdate("CREATE TABLE Dietas (ID VARCHAR(12) NOT NULL, Empleado VARCHAR(45), Cantidad DOUBLE, Concepto VARCHAR(120), PRIMARY KEY (ID))");
+                    System.out.println("Tabla 'Dietas' creada exitosamente.");
                 } else {
                     stm = cn.createStatement();
-                    System.out.println("La tabla 'Usuarios' ya existe.");
+                    System.out.println("La tabla 'Dietas' ya existe.");
                 }
 
-                rs = stm.executeQuery("SELECT * FROM Usuarios");
+                rs = stm.executeQuery("SELECT * FROM Dietas");
 
                 while (rs.next()) {
-                    String dni = rs.getString("DNI");
-                    String nombre = rs.getString("nombre");
-                    String pais = rs.getString("pais");
+                    String id = rs.getString("ID");
+                    String empleado = rs.getString("Empleado");
+                    String cantidad = rs.getString("Cantidad");
+                    String concepto = rs.getString("Concepto");
                 }
             }
         } catch (SQLException e) {
