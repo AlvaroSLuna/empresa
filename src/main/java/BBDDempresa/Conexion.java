@@ -62,4 +62,9 @@ public class Conexion {
         }
         return exists;
     }
+
+public String anyadirDietas() {
+    return null;
+    }
+
 }
